@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 		exit(-1);
 	}
 
-#ifdef __arch64__
+#ifdef __aarch64__
 	printf("0x%016llx\n",*((unsigned long int *)(ptr+page_offset)));
 #else
 	printf("0x%08lx\n",*((unsigned long int *)(ptr+page_offset)));
