@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 {
 	int fd;
 	void *ptr;
-	unsigned val;
+	unsigned long int val;
 	uintptr_t addr, page_addr, page_offset;
 	unsigned page_size=sysconf(_SC_PAGESIZE);
 
