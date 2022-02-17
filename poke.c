@@ -32,6 +32,7 @@
 *
 */
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
 	int fd;
 	void *ptr;
 	unsigned val;
-	unsigned addr, page_addr, page_offset;
+	uintptr_t addr, page_addr, page_offset;
 	unsigned page_size=sysconf(_SC_PAGESIZE);
 
 	fd=open("/dev/mem",O_RDWR);
@@ -64,18 +65,18 @@ int main(int argc, char *argv[])
 		exit(-1);
 	}
 
-	addr=strtoul(argv[1],NULL,0);
-	val=strtoul(argv[2],NULL,0);
+	addr=strtoull(argv[1],NULL,0);
+	val=strtoull(argv[2],NULL,0);
 
 	page_addr=(addr & ~(page_size-1));
 	page_offset=addr-page_addr;
 
 	ptr=mmap(NULL,page_size,PROT_READ|PROT_WRITE,MAP_SHARED,fd,(addr & ~(page_size-1)));
-	if((int)ptr==-1) {
+	if((uintptr_t)ptr==-1) {
 		perror(argv[0]);
 		exit(-1);
 	}
 
-	*((unsigned *)(ptr+page_offset))=val;
+	*((unsigned long int*)(ptr+page_offset))=val;
 	return 0;
 }
